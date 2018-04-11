@@ -1,5 +1,0 @@
-languageCode = "en-en"
-title = "Hugo Test"
-theme = "simple-a"
-disableKinds = ["RSS"]
-copyright = "my test"

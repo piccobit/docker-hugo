@@ -2,10 +2,9 @@
 FROM alpine:3.7@sha256:7df6db5aa61ae9480f52f0b3a06a140ab98d427f86d8d5de0bedab9b8df6b1c0
 
 LABEL description="Docker container for building static sites with the Hugo static site generator."
-LABEL maintainer="Johannes Mitlmeier <dev.jojomi@yahoo.com>"
+LABEL maintainer="HD Stich <hd.stich.io>"
 
-COPY ./run.sh /run.sh
-ENV HUGO_VERSION=0.37.1
+ENV HUGO_VERSION=0.38
 ADD https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_${HUGO_VERSION}_Linux-64bit.tar.gz /tmp
 RUN tar -xf /tmp/hugo_${HUGO_VERSION}_Linux-64bit.tar.gz -C /tmp \
     && mkdir -p /usr/local/sbin \
@@ -16,15 +15,14 @@ RUN tar -xf /tmp/hugo_${HUGO_VERSION}_Linux-64bit.tar.gz -C /tmp \
     && rm -rf /tmp/README.md
 
 RUN apk add --update git \
+    && apk add --update git-lfs \
     && apk upgrade \
     && apk add --no-cache ca-certificates
 
-VOLUME /src
-VOLUME /output
+RUN git lfs install --system
 
-RUN chmod 0777 /run.sh && ls -lahr / && whoami && cat /run.sh && which sh
+VOLUME /src
+VOLUME /dest
 
 WORKDIR /src
-CMD ["/run.sh"]
-
-EXPOSE 1313
+CMD ["hugo"]
