@@ -4,9 +4,10 @@ FROM alpine:3.8@sha256:621c2f39f8133acb8e64023a94dbdf0d5ca81896102b9e57c0dc184ca
 LABEL description="Docker container for building static sites with the Hugo static site generator (Extended version)."
 LABEL maintainer="HD Stich <hd.stich.io>"
 
-ENV HUGO_VERSION=0.51
+ENV HUGO_VERSION=0.54.0
 
 ADD https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_Linux-64bit.tar.gz /tmp
+
 RUN tar -xf /tmp/hugo_extended_${HUGO_VERSION}_Linux-64bit.tar.gz -C /tmp \
     && mv /tmp/hugo /bin/hugo \
     && rm -rf /tmp/hugo_extended_${HUGO_VERSION}_linux_amd64 \
